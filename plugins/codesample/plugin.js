@@ -80,7 +80,7 @@
 
 			target[fragments[fragments.length - 1]] = modules[id];
 		}
-		
+
 		// Expose private modules for unit tests
 		if (exports.AMDLC_TESTS) {
 			privateModules = exports.privateModules || {};
@@ -1232,32 +1232,6 @@ define("tinymce/codesampleplugin/Plugin", [
 			return;
 		}
 
-		// Todo: use a proper css loader here
-		function loadCss() {
-			var linkElm;
-
-			if (editor.inline && addedInlineCss) {
-				return;
-			}
-
-			if (!editor.inline && addedCss) {
-				return;
-			}
-
-			if (editor.inline) {
-				addedInlineCss = true;
-			} else {
-				addedCss = true;
-			}
-
-			linkElm = editor.dom.create('link', {
-				rel: 'stylesheet',
-				href: pluginUrl + '/css/prism.css'
-			});
-
-			editor.getDoc().getElementsByTagName('head')[0].appendChild(linkElm);
-		}
-
 		editor.on('PreProcess', function(e) {
 			$('pre[contenteditable=false]', e.node).
 				filter(trimArg(Utils.isCodeSample)).
@@ -1303,8 +1277,6 @@ define("tinymce/codesampleplugin/Plugin", [
 			cmd: 'codesample',
 			title: 'Insert/Edit code sample'
 		});
-
-		editor.on('init', loadCss);
 	});
 });
 
